@@ -69,3 +69,8 @@ See `CITATION.cff`.
 ## License
 
 See `LICENSE`.
+
+-------
+<div align="center">
+  Made with ❤️ by <a href="https://github.com/MorillaLab">MorillaLab</a>
+</div>
