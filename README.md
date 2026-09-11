@@ -1,7 +1,7 @@
 # PeptideBERT
 single-sequence language modelling learns family-defining structure in plant signalling peptides
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-GNU-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![Dependencies](https://img.shields.io/badge/deps-NumPy%20%7C%20SciPy%20%7C%20scikit--learn%20%7C%20Matplotlib-lightgrey.svg)](requirements.txt)
 [![Build](https://img.shields.io/github/actions/workflow/status/MorillaLab/PeptideBERT/ci.yml?branch=main)](https://github.com/MorillaLab/PeptideBERT/actions)
