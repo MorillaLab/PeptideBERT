@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite the manuscript below."
+title: "PeptideBERT: single-sequence language modelling learns family-defining structure in plant signalling peptides"
+authors:
+  - family-names: Vomo-Donfack
+    given-names: KL
+  - family-names: Aberbache
+    given-names: M
+  - family-names: Cantez
+    given-names: A
+  - family-names: Hozsu
+    given-names: A
+  - family-names: Ginot
+    given-names: G
+  - family-names: Doblas
+    given-names: VG
+  - family-names: Morilla
+    given-names: I
+repository-code: "https://github.com/MorillaLab/PeptideBERT"
+license: MIT
