@@ -1,0 +1,11 @@
+# PLACEHOLDER — fine-tuning / linear-probe hyperparameters
+seed: 0
+epochs: 12
+optimizer: adam
+learning_rate_full_finetune: 1.5e-3
+learning_rate_linear_probe: 8e-3
+regimes:
+  - [pretrained, full_finetune]
+  - [pretrained, linear_probe]
+  - [random_init, full_finetune]
+  - [random_init, linear_probe]

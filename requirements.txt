@@ -1,0 +1,8 @@
+numpy>=1.24
+scipy>=1.10
+scikit-learn>=1.2
+matplotlib>=3.7
+
+# No PyTorch/JAX by design -- see REPORT.md section 3. The model (src/model.py)
+# and autograd engine (src/tensor.py) are pure NumPy; porting to a real
+# framework later is a matter of swapping the Tensor import.

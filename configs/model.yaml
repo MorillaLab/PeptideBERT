@@ -1,0 +1,10 @@
+# PLACEHOLDER — architecture hyperparameters
+n_layers: 3
+n_heads: 4
+d_model: 64
+d_ff: 256
+vocab_size: 26
+max_seq_len: 180
+norm_type: pre_layer_norm
+activation: gelu
+total_parameters: 169567

@@ -1,0 +1,9 @@
+# PLACEHOLDER — pretraining hyperparameters
+seed: 0
+epochs_initial: 30
+epochs_extended: 70
+mask_rate: 0.15
+mask_replace_probs: [0.8, 0.1, 0.1]   # [MASK] / random / unchanged
+optimizer: adam
+learning_rate: 4e-3
+batch_size: 16
