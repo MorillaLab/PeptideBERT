@@ -68,7 +68,7 @@ See `CITATION.cff`.
 
 ## License
 
-See `LICENSE`.
+GNU General Public License v3.0 -- See `LICENSE`.
 
 -------
 <div align="center">
