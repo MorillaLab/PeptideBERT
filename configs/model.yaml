@@ -1,4 +1,4 @@
-# PLACEHOLDER — architecture hyperparameters
+# architecture hyperparameters
 n_layers: 3
 n_heads: 4
 d_model: 64
