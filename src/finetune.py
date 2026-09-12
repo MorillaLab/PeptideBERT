@@ -25,7 +25,7 @@ from model import PeptideBERT, Adam, MAX_LEN
 from peptide_data import encode
 from pretrain import load_model, _release_memory
 
-RESULTS = "/home/claude/s2pepanalyst/results"
+RESULTS = "/home/morillalab/s2pepanalyst/results"
 FAMILY_NAMES = ["RALF", "CLE", "PSK", "PEP", "DECOY"]
 FAM2ID = {f: i for i, f in enumerate(FAMILY_NAMES)}
 N_EPOCHS = 12
