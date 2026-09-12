@@ -23,7 +23,7 @@ from model import PeptideBERT, MAX_LEN
 from peptide_data import encode, FAMILIES, MASK_ID, CLS_ID, SEP_ID, PAD_ID
 from pretrain import load_model, _release_memory
 
-RESULTS = "/home/claude/s2pepanalyst/results"
+RESULTS = "/home/morilla/s2pepanalyst/results"
 SEED = 0
 
 
