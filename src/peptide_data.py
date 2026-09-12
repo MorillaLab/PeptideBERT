@@ -9,7 +9,7 @@ own benchmark sizes of 18 / 779 / 1,177 sequences, and Arabidopsis RALF -
 the biggest single family - has only 39 members). So every sequence here
 is one of exactly two kinds, and each is tagged as such in FAMILIES below:
 
-  REAL      - fetched from UniProt/NCBI/TAIR during this session, given
+  REAL      - fetched from UniProt/NCBI/TAIR, given
               verbatim with its accession. Two of these (RALF, CLE) are
               real, checked precursor sequences.
   TEMPLATE  - the *mature/conserved motif* is real and literature-sourced
