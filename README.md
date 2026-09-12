@@ -1,76 +1,189 @@
-# PeptideBERT
-single-sequence language modelling learns family-defining structure in plant signalling peptides
+<p align="center">
+  <img src="assets/banner.svg" alt="PeptideBERT banner" width="100%">
+</p>
 
-[![License: MIT](https://img.shields.io/badge/License-GNUV3.0-yellow.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
-[![Dependencies](https://img.shields.io/badge/deps-NumPy%20%7C%20SciPy%20%7C%20scikit--learn%20%7C%20Matplotlib-lightgrey.svg)](requirements.txt)
-[![Build](https://img.shields.io/github/actions/workflow/status/MorillaLab/PeptideBERT/ci.yml?branch=main)](https://github.com/MorillaLab/PeptideBERT/actions)
-[![Issues](https://img.shields.io/github/issues/MorillaLab/PeptideBERT)](https://github.com/MorillaLab/PeptideBERT/issues)
-[![Repo size](https://img.shields.io/github/repo-size/MorillaLab/PeptideBERT)](https://github.com/MorillaLab/PeptideBERT)
-[![DOI](https://img.shields.io/badge/DOI-pending-orange.svg)](#citation)
+<h3 align="center">Single-sequence language modelling learns family-defining structure<br/>in plant signalling peptides</h3>
 
+<p align="center">
+  Vomo-Donfack, K.L. · Aberbache, M. · Cantez, A. · Hozsu, A. · Ginot, G. · Doblas, V.G. · Morilla, I.
+</p>
 
-## Overview
+<p align="center">
+  <a href="LICENSE"><img alt="License: GPL-3.0" src="https://img.shields.io/badge/License-GPL--3.0-2ea44f.svg"></a>
+  <a href="https://www.python.org/downloads/"><img alt="Python" src="https://img.shields.io/badge/python-3.10%2B-blue.svg"></a>
+  <a href="requirements.txt"><img alt="Dependencies" src="https://img.shields.io/badge/deps-NumPy%20%7C%20SciPy%20%7C%20scikit--learn%20%7C%20Matplotlib-lightgrey.svg"></a>
+  <a href="https://github.com/MorillaLab/PeptideBERT/actions"><img alt="Build" src="https://img.shields.io/github/actions/workflow/status/MorillaLab/PeptideBERT/ci.yml?branch=main"></a>
+  <a href="https://github.com/MorillaLab/PeptideBERT/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/MorillaLab/PeptideBERT?style=flat"></a>
+  <a href="https://github.com/MorillaLab/PeptideBERT/issues"><img alt="Issues" src="https://img.shields.io/github/issues/MorillaLab/PeptideBERT"></a>
+  <a href="#citation"><img alt="DOI" src="https://img.shields.io/badge/DOI-pending-orange.svg"></a>
+</p>
 
-PeptideBERT is a 169,567-parameter, pre-layer-norm transformer encoder (3 layers, 4
-heads, model dim 64, FFN dim 256), pretrained with masked-language modelling directly on
-plant small signalling peptide (SSP) sequences (RALF, CLE, PSK, PEP) plus a synthetic
-i.i.d. decoy class, and implemented from scratch in NumPy (no PyTorch/JAX dependency).
-It is evaluated against an identically initialised, untrained backbone under a
-{pretrained, random-init} × {fine-tuned, linear-probe} design, with masked-residue
-calibration, embedding-geometry, and attention/saliency analyses as complementary lines
-of evidence. See the manuscript for full methodological detail.
+<p align="center">
+  <b>169,567 parameters</b> · <b>zero deep-learning dependencies</b> (NumPy only) · <b>4 peptide families + 1 decoy class</b> · fully reproducible, seed-fixed pipeline
+</p>
+
+---
+
+A 169K-parameter transformer, trained from scratch on nothing but raw plant peptide
+sequences, learns to tell **RALF** apart from **CLE**, **PSK**, and **PEP** — and knows
+when a sequence is structureless noise — without ever seeing an alignment, a structure,
+or a label. This repository is the reference implementation.
+
+## Why this exists
+
+Every current plant small-signalling-peptide (SSP) classifier — including the
+best-performing ones — leans on embeddings from **generalist** protein language models
+(ESM-2 and friends) trained on sequence space at large. Nobody had checked what happens
+if you instead pretrain **directly and only** on the peptide family you care about, at a
+scale (hundreds, not millions, of sequences) that's actually realistic for a niche plant
+hormone family. This is that check.
+
+## Headline results
+
+| Evidence | Random-init backbone | **Pretrained PeptideBERT** |
+|---|---:|---:|
+| Masked-residue accuracy (chance ≈ 5%) | 5.1% | **18.0%** |
+| kNN family accuracy, full corpus (chance 20%) | 82.0% ± 5.4% | **98.0% ± 1.2%** |
+| kNN family accuracy, length-matched band (n=148) | 83.1% ± 6.0% | **97.2% ± 5.5%** |
+| Linear-probe classification (70-epoch checkpoint) | 90.0% | **93.3%** |
+| Attention-to-motif variability across heads (s.d.) | 0.007 | **0.078** |
+
+Every real family lights up above chance under masking; a synthetic i.i.d. decoy class
+stays at chance — the model isn't just confident, it's confident *specifically where
+sequence structure actually exists to support it*. See [Results & figures](#results--figures)
+and the manuscript for the full picture, including the two methodological corrections
+(a length-confounded corpus, and an under-converged 30-epoch pretraining run) reported
+transparently rather than smoothed over.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    subgraph Input
+        A["Raw peptide sequence\n(single-residue tokens)"]
+    end
+    subgraph PeptideBERT["PeptideBERT · 169,567 params"]
+        B["Embedding\n+ learned positions"] --> C["3 x Transformer encoder\n(pre-LN, 4 heads, d=64, ffn=256)"]
+        C --> D["Pooled [CLS] /\nmean-pooled hidden states"]
+    end
+    subgraph Heads["Task heads"]
+        E["Masked-residue\nprediction (pretraining)"]
+        F["5-way family\nclassifier (fine-tune / probe)"]
+        G["kNN + t-SNE\non pooled embeddings"]
+    end
+    A --> B
+    D --> E
+    D --> F
+    D --> G
+```
+
+Implemented **from scratch in NumPy** — model, transformer blocks, and a hand-rolled
+reverse-mode autodiff engine, every primitive of which is validated against
+finite-difference gradient checks (max abs error < 3x10^-4). No PyTorch, no JAX.
+
+## Quickstart
+
+```bash
+git clone https://github.com/MorillaLab/PeptideBERT.git
+cd PeptideBERT
+pip install -r requirements.txt
+
+# Reproduces the full corpus, both pretraining checkpoints (30- and 70-epoch),
+# all four fine-tuning/linear-probe regimes, and every figure - one fixed seed (0).
+python3 run_all.py
+```
+
+Outputs land in `results/json/` (raw numbers behind every statistic in the manuscript)
+and `results/figures/` (Figs. 1-6, regenerated on demand).
 
 ## Repository layout
 
 ```
 PeptideBERT/
 ├── data/
-│   ├── raw/            # Literature seed sequences (RALF, CLE) and motif references (PSK, PEP)
-│   └── processed/      # Augmented 300-sequence corpus, splits, length-matched band
-├── src/                # Model, autodiff engine, training, evaluation, and figure-generation code
+│   ├── raw/            # RALF (Q9SRY3) & CLE (Q9XF04) seeds; PSK/PEP motif scaffolds
+│   └── processed/      # Augmented 300-seq corpus, 240/60 split, length-matched band
+├── src/                # Model, autodiff engine, MLM pretraining, fine-tuning, eval
 ├── checkpoints/
-│   ├── pretrained_30epoch/   # Initial pretraining checkpoint (pre-extension)
-│   ├── pretrained_70epoch/   # Final pretraining checkpoint used for headline results
-│   └── random_init/          # Identically initialised, never-trained control backbone
+│   ├── pretrained_30epoch/    # Pre-extension checkpoint (documented discrepancy)
+│   ├── pretrained_70epoch/    # Headline checkpoint
+│   └── random_init/           # Identically initialised, never-trained control
 ├── results/
-│   ├── json/            # Raw numeric outputs underlying every reported statistic
-│   └── figures/         # Rendered figures (Figs. 1-6) generated from results/json
-├── notebooks/           # Optional exploratory / walkthrough notebooks
-├── tests/               # Gradient-check and unit tests for the from-scratch autodiff engine
-├── configs/             # Hyperparameter / experiment configuration files
-├── run_all.py           # Top-level entry point: reproduces every result end to end
-├── requirements.txt
-├── LICENSE
-└── CITATION.cff
+│   ├── json/            # Every number behind every figure/statistic
+│   └── figures/         # Rendered Figs. 1-6
+├── configs/             # Pretraining / fine-tuning / architecture hyperparameters
+├── notebooks/           # Exploratory walkthroughs
+├── tests/               # Gradient checks + model sanity tests
+├── assets/              # README/banner assets
+├── run_all.py           # One command, full reproduction, seed = 0
+└── requirements.txt
 ```
 
-## Reproducibility
+> **Status:** scaffold populated with module-level documentation; implementation,
+> data, and checkpoint artefacts to be added prior to tagging a release.
 
-All stochastic procedures use a fixed random seed (0). Running:
+## Method, in four moves
 
-```bash
-python3 run_all.py
-```
+1. **Calibrate, don't just elevate** - masked-residue confidence is checked against a
+   synthetic decoy class engineered to be genuinely unpredictable, not just against chance.
+2. **Prove it isn't length or amino-acid composition** - a dedicated length-matched
+   band (75-105 aa, all 5 classes) where a length-only classifier sits at chance (24.4%)
+   is the precondition for every downstream comparison.
+3. **Cross full fine-tuning with a frozen linear probe** - disentangles what
+   pretraining itself contributes from what gradient descent can paper over.
+4. **Open the box** - gradient-based saliency and per-head attention-to-motif analyses
+   show pretraining produces a genuine division of labour among heads, not just a
+   uniform confidence bump.
 
-is intended to regenerate the pretraining/validation/test splits, both model
-checkpoints (30- and 70-epoch), all downstream fine-tuning results, and every figure
-and JSON output referenced in the manuscript.
+## Data honesty
 
-## Data and Code Availability
+Only RALF and CLE are literature-verified reference sequences (UniProt `Q9SRY3`,
+`Q9XF04`); PSK and PEP are illustrative scaffolds built around literature-reported
+conserved motifs; the decoy class is synthetic by construction. The corpus (300
+sequences), model (169,567 parameters), and single training run are sized for a
+**feasibility study**, not a benchmark claim - see the manuscript's Discussion and
+Limitations for the full accounting, including what a 30-vs-70-epoch pretraining
+comparison did and didn't resolve.
 
-Code, splits, checkpoints, and raw result files underlying every figure are hosted at
-https://github.com/MorillaLab/PeptideBERT.
+## Results & figures
+
+| Fig. | What it shows |
+|---|---|
+| 1 | Pretraining loss & accuracy, 30 -> 70 epochs |
+| 2 | Held-out accuracy vs. pseudo-perplexity, pretrained vs. random-init, by family |
+| 3 | t-SNE of pooled embeddings - pretrained vs. random-init vs. dipeptide baseline |
+| 4 | Fine-tuning curves (4 regimes) + kNN vs. baselines, full corpus and length-matched |
+| 5 | Gradient-based saliency at masked positions |
+| 6 | Attention-to-conserved-motif, by layer and head |
+
+## Roadmap
+
+- [ ] Structural downstream task (RALF-LRX contact/interface prediction) via
+      AlphaFold-modelled complexes
+- [ ] Replicate the 30-vs-70-epoch pretraining comparison across multiple seeds
+- [ ] Test whether PeptideBERT embeddings add value **on top of** ESM-2 in a
+      production pipeline (e.g. S2-PepAnalyst), rather than replacing it
+- [ ] Expand the literature-verified reference set beyond RALF/CLE
 
 ## Citation
 
-See `CITATION.cff`.
+If you use this code or data, please cite the manuscript (see [`CITATION.cff`](CITATION.cff)):
+
+```bibtex
+@article{vomodonfack2026peptidebert,
+  title   = {PeptideBERT: single-sequence language modelling learns family-defining
+             structure in plant signalling peptides},
+  author  = {Vomo-Donfack, K.L. and Aberbache, M. and Cantez, A. and Hozsu, A.
+             and Ginot, G. and Doblas, V.G. and Morilla, I.},
+  year    = {2026},
+  url     = {https://github.com/MorillaLab/PeptideBERT}
+}
+```
+
+## Contributing
+
+Issues and PRs are welcome - see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## License
 
-GNU General Public License v3.0 -- See `LICENSE`.
-
--------
-<div align="center">
-  Made with ❤️ by <a href="https://github.com/MorillaLab">MorillaLab</a>
-</div>
+[GPL-3.0](LICENSE)
