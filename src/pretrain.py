@@ -40,7 +40,7 @@ def _release_memory():
         _libc.malloc_trim(0)
 
 
-RESULTS = "/home/claude/s2pepanalyst/results"
+RESULTS = "/home/morillalab/s2pepanalyst/results"
 N_EPOCHS = 70
 EPOCHS_PER_CALL = 8
 BATCH_SIZE = 16
