@@ -1,4 +1,4 @@
-# PLACEHOLDER — fine-tuning / linear-probe hyperparameters
+#fine-tuning / linear-probe hyperparameters
 seed: 0
 epochs: 12
 optimizer: adam
