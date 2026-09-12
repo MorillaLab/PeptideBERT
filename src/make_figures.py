@@ -8,8 +8,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-RESULTS = "/home/claude/s2pepanalyst/results"
-FIGDIR = "/home/claude/s2pepanalyst/figures"
+RESULTS = "/home/morillalab/s2pepanalyst/results"
+FIGDIR = "/home/morillalab/s2pepanalyst/figures"
 FAMILY_COLORS = {"RALF": "#c0392b", "CLE": "#2980b9", "PSK": "#27ae60",
                   "PEP": "#8e44ad", "DECOY": "#7f8c8d"}
 plt.rcParams.update({"figure.dpi": 140, "font.size": 10, "axes.spines.top": False,
