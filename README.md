@@ -57,11 +57,11 @@ transparently rather than smoothed over.
 
 ## Tokenisation
 
-20 canonical amino acids plus an ambiguity token (X) and five special tokens ([PAD], [UNK],[MASK], [CLS], [SEP]). `[CLS]` stands for **classification token**, and `[SEP]` for **separator token**
+20 canonical amino acids plus an ambiguity token (X) and five special tokens ([PAD], [UNK],[MASK], [CLS], [SEP]).
 
-**`[CLS]`** gets prepended to the very start of every sequence. The idea: because self-attention lets every position attend to every other position, this token's final-layer representation ends up aggregating information from the whole sequence — so it becomes a natural summary vector to pool from for sequence-level tasks. That's exactly how we used it: in `model.py`'s `classify_logits`, we take `hidden[:, 0, :]` — position 0, always the `[CLS]` token — and feed that straight into the family-classification head, rather than pooling over all positions.
+**`[CLS]` classification token** gets prepended to the very start of every sequence. The idea: because self-attention lets every position attend to every other position, this token's final-layer representation ends up aggregating information from the whole sequence — so it becomes a natural summary vector to pool from for sequence-level tasks. That's exactly how we used it: in `model.py`'s `classify_logits`, we take `hidden[:, 0, :]` — position 0, always the `[CLS]` token — and feed that straight into the family-classification head, rather than pooling over all positions.
 
-**`[SEP]`** marks a boundary. In BERT's original use case, it separates two distinct segments when you feed in a sentence pair (`[CLS] sentence A [SEP] sentence B [SEP]`, for tasks like question-answering). We never feed in sequence pairs — every input is one peptide — so `[SEP]` in our code does the simpler job of just marking "end of sequence," appended once after the last real residue and before any padding.
+**`[SEP]` separator token** marks a boundary. In BERT's original use case, it separates two distinct segments when you feed in a sentence pair (`[CLS] sentence A [SEP] sentence B [SEP]`, for tasks like question-answering). We never feed in sequence pairs — every input is one peptide — so `[SEP]` in our code does the simpler job of just marking "end of sequence," appended once after the last real residue and before any padding.
 
 Worth contrasting with `[MASK]` and `[PAD]`, since all four show up together in `peptide_data.py`: `[MASK]` is the one actually doing work during pretraining (it's what gets predicted); `[PAD]` just fills unused positions in a batch and gets masked out of attention entirely. `[CLS]` and `[SEP]` are structural — they don't get predicted or hidden, they just give the model fixed reference points to anchor a "start of sequence" and "whole-sequence summary" representation to.
 
