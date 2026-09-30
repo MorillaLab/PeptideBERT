@@ -38,7 +38,7 @@ import mature_peptide_data as M
 from mature_pipeline import pooled_embeddings, FAMS, FAM2ID
 from pretrain import _release_memory
 
-RESULTS = "/home/claude/s2pepanalyst/results"
+RESULTS = "/home/morillalab/s2pepanalyst/results"
 
 TOMATO_SYSTEMIN = "AVQSKPPSKRDPPKMQTD"
 FREE_POS = [0, 1, 2, 3, 4, 7, 8, 9, 10]
