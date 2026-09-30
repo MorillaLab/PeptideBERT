@@ -1,0 +1,237 @@
+{
+ "candidates": [
+  {
+   "name": "tomato_systemin",
+   "seq": "AVQSKPPSKRDPPKMQTD",
+   "expected": "ACTIVE",
+   "basis": "Pearce et al. 1991 Science 253:895",
+   "group": "systemin",
+   "predicted_family": "SYSTEMIN",
+   "vote": 5,
+   "mean_dist": 0.0,
+   "neighbours": [
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN"
+   ],
+   "in_training": true,
+   "length": 18
+  },
+  {
+   "name": "systemin_var_A",
+   "seq": "AVFSKPPSKWDPPKMQTD",
+   "expected": "UNKNOWN",
+   "basis": "our designed conservative variant",
+   "group": "systemin",
+   "predicted_family": "SYSTEMIN",
+   "vote": 5,
+   "mean_dist": 2.8739637772931177,
+   "neighbours": [
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN"
+   ],
+   "in_training": false,
+   "length": 18
+  },
+  {
+   "name": "systemin_var_B",
+   "seq": "AVQVKPPGKRRPPKMQTD",
+   "expected": "UNKNOWN",
+   "basis": "our designed conservative variant",
+   "group": "systemin",
+   "predicted_family": "SYSTEMIN",
+   "vote": 5,
+   "mean_dist": 3.0163506660947434,
+   "neighbours": [
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN"
+   ],
+   "in_training": false,
+   "length": 18
+  },
+  {
+   "name": "systemin_var_C",
+   "seq": "AVSSKPPSSADPPKMQTD",
+   "expected": "UNKNOWN",
+   "basis": "our designed conservative variant",
+   "group": "systemin",
+   "predicted_family": "SYSTEMIN",
+   "vote": 5,
+   "mean_dist": 1.1308618038691858,
+   "neighbours": [
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN"
+   ],
+   "in_training": false,
+   "length": 18
+  },
+  {
+   "name": "systemin_disrupted",
+   "seq": "AVQSKPGSKRDPPKAATD",
+   "expected": "INACTIVE (by design)",
+   "basis": "our negative control: breaks Pro + C-term",
+   "group": "systemin",
+   "predicted_family": "SYSTEMIN",
+   "vote": 5,
+   "mean_dist": 4.4688101944276015,
+   "neighbours": [
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN",
+    "SYSTEMIN"
+   ],
+   "in_training": false,
+   "length": 18
+  },
+  {
+   "name": "AtPep1_full",
+   "seq": "ATKVKAKQRGKEKVSSGRPGQHN",
+   "expected": "ACTIVE",
+   "basis": "Huffaker et al. 2006 PNAS",
+   "group": "literature",
+   "predicted_family": "PEP",
+   "vote": 5,
+   "mean_dist": 1.1944564289678152,
+   "neighbours": [
+    "PEP",
+    "PEP",
+    "PEP",
+    "PEP",
+    "PEP"
+   ],
+   "in_training": false,
+   "length": 23
+  },
+  {
+   "name": "AtPep1_13_23",
+   "seq": "KVSSGRPGQHN",
+   "expected": "PARTIAL",
+   "basis": "Lin et al. 2024 IJMS: ROS yes, root-growth inhibition reduced",
+   "group": "literature",
+   "predicted_family": "CLE",
+   "vote": 5,
+   "mean_dist": 8.566884856208386,
+   "neighbours": [
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE"
+   ],
+   "in_training": false,
+   "length": 11
+  },
+  {
+   "name": "CLV3_12mer",
+   "seq": "RTVPSGPDPLHH",
+   "expected": "ACTIVE",
+   "basis": "Kondo et al. 2006",
+   "group": "literature",
+   "predicted_family": "CLE",
+   "vote": 5,
+   "mean_dist": 1.5219550579529693,
+   "neighbours": [
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE"
+   ],
+   "in_training": false,
+   "length": 12
+  },
+  {
+   "name": "TDIF",
+   "seq": "HEVPSGPNPISN",
+   "expected": "ACTIVE",
+   "basis": "Ito et al. 2006 Science 313:842",
+   "group": "literature",
+   "predicted_family": "CLE",
+   "vote": 5,
+   "mean_dist": 3.053113061194209,
+   "neighbours": [
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE"
+   ],
+   "in_training": false,
+   "length": 12
+  },
+  {
+   "name": "GrCLE1_1",
+   "seq": "RVIPGGPDPLHN",
+   "expected": "ACTIVE",
+   "basis": "US 8,569,578 / Fiers et al. 2005",
+   "group": "literature",
+   "predicted_family": "CLE",
+   "vote": 5,
+   "mean_dist": 2.8578253304221035,
+   "neighbours": [
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE"
+   ],
+   "in_training": false,
+   "length": 12
+  },
+  {
+   "name": "GrCLE1_1m_G6A",
+   "seq": "RVIPGAPDPLHN",
+   "expected": "REDUCED",
+   "basis": "Gly6->Ala, clv3-1/clv3-5-equivalent knockout substitution",
+   "group": "literature",
+   "predicted_family": "CLE",
+   "vote": 5,
+   "mean_dist": 3.3122761295980068,
+   "neighbours": [
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE"
+   ],
+   "in_training": false,
+   "length": 12
+  },
+  {
+   "name": "Ag_16p_negctrl",
+   "seq": "APNNHHYSSAGRQDQT",
+   "expected": "INACTIVE",
+   "basis": "published negative control peptide, Fiers et al. 2005",
+   "group": "literature",
+   "predicted_family": "SYSTEMIN",
+   "vote": 3,
+   "mean_dist": 7.056706470812751,
+   "neighbours": [
+    "DECOY",
+    "SYSTEMIN",
+    "DECOY",
+    "SYSTEMIN",
+    "SYSTEMIN"
+   ],
+   "in_training": false,
+   "length": 16
+  }
+ ],
+ "reference_mean_dist": 2.66012013176029,
+ "active_mean": 2.1568374696342745,
+ "inactive_mean": 6.311955818873048,
+ "pairwise_correct": 12,
+ "pairwise_total": 12
+}

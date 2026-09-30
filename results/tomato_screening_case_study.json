@@ -1,0 +1,265 @@
+{
+ "candidates": [
+  {
+   "name": "tomato_systemin",
+   "seq": "AVQSKPPSKRDPPKMQTD",
+   "provenance": "REAL",
+   "note": "UniProt P27058, residues 179-196 of prosystemin",
+   "predicted_family": "PEP",
+   "vote_count": 4,
+   "k": 5,
+   "neighbour_families": [
+    "PSK",
+    "PEP",
+    "PEP",
+    "PEP",
+    "PEP"
+   ],
+   "neighbour_distances": [
+    9.256727768140529,
+    10.634597577133471,
+    10.836034095939326,
+    10.851129683937618,
+    10.903677770485237
+   ],
+   "mean_dist_to_neighbours": 10.496433379127236
+  },
+  {
+   "name": "designed_variant_A",
+   "seq": "AVFSKPPSKWDPPKMQTD",
+   "provenance": "DESIGNED",
+   "note": "2-3 substitutions at literature-free positions; C-term 7 + prolines held fixed",
+   "predicted_family": "PEP",
+   "vote_count": 3,
+   "k": 5,
+   "neighbour_families": [
+    "DECOY",
+    "DECOY",
+    "PEP",
+    "PEP",
+    "PEP"
+   ],
+   "neighbour_distances": [
+    10.110894395440711,
+    10.627113874487305,
+    10.739755410529042,
+    11.161259829768175,
+    11.463730150720345
+   ],
+   "mean_dist_to_neighbours": 10.820550732189115
+  },
+  {
+   "name": "designed_variant_B",
+   "seq": "AVQVKPPGKRRPPKMQTD",
+   "provenance": "DESIGNED",
+   "note": "2-3 substitutions at literature-free positions; C-term 7 + prolines held fixed",
+   "predicted_family": "PEP",
+   "vote_count": 4,
+   "k": 5,
+   "neighbour_families": [
+    "PSK",
+    "PEP",
+    "PEP",
+    "PEP",
+    "PEP"
+   ],
+   "neighbour_distances": [
+    10.016155270736052,
+    10.167992783883316,
+    10.464537776223972,
+    10.596826815043835,
+    10.775462517488338
+   ],
+   "mean_dist_to_neighbours": 10.404195032675101
+  },
+  {
+   "name": "designed_variant_C",
+   "seq": "AVSSKPPSSADPPKMQTD",
+   "provenance": "DESIGNED",
+   "note": "2-3 substitutions at literature-free positions; C-term 7 + prolines held fixed",
+   "predicted_family": "PEP",
+   "vote_count": 4,
+   "k": 5,
+   "neighbour_families": [
+    "PSK",
+    "PEP",
+    "PEP",
+    "PEP",
+    "PEP"
+   ],
+   "neighbour_distances": [
+    9.442405355469896,
+    10.315550271071988,
+    10.62164713314645,
+    10.652564013974755,
+    10.726660566970718
+   ],
+   "mean_dist_to_neighbours": 10.351765468126763
+  },
+  {
+   "name": "designed_variant_D",
+   "seq": "AVQSKPPSCADPPKMQTD",
+   "provenance": "DESIGNED",
+   "note": "2-3 substitutions at literature-free positions; C-term 7 + prolines held fixed",
+   "predicted_family": "PEP",
+   "vote_count": 4,
+   "k": 5,
+   "neighbour_families": [
+    "PSK",
+    "PEP",
+    "PEP",
+    "PEP",
+    "PEP"
+   ],
+   "neighbour_distances": [
+    8.522523958339018,
+    9.523701863712361,
+    10.510514370653883,
+    10.780627304392366,
+    10.82983148373247
+   ],
+   "mean_dist_to_neighbours": 10.03343979616602
+  },
+  {
+   "name": "designed_disrupted_control",
+   "seq": "AVQSKPGSKRDPPKAATD",
+   "provenance": "DESIGNED (negative control)",
+   "note": "deliberately mutates a conserved proline + invariant C-terminus",
+   "predicted_family": "PEP",
+   "vote_count": 3,
+   "k": 5,
+   "neighbour_families": [
+    "PSK",
+    "PEP",
+    "PEP",
+    "PEP",
+    "PSK"
+   ],
+   "neighbour_distances": [
+    7.7186813788322075,
+    9.60308263633285,
+    9.961028100758947,
+    10.016102903645276,
+    10.318107219502334
+   ],
+   "mean_dist_to_neighbours": 9.523400447814321
+  }
+ ],
+ "in_distribution_controls": [
+  {
+   "name": "control_CLE",
+   "true_family": "CLE",
+   "seq_length": 94,
+   "predicted_family": "CLE",
+   "vote_count": 5,
+   "k": 5,
+   "neighbour_families": [
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE",
+    "CLE"
+   ],
+   "neighbour_distances": [
+    0.0,
+    3.6783992017664517,
+    3.758223625754241,
+    3.8823484416966108,
+    3.963364716398695
+   ],
+   "mean_dist_to_neighbours": 3.0564671971232
+  },
+  {
+   "name": "control_PSK",
+   "true_family": "PSK",
+   "seq_length": 69,
+   "predicted_family": "PSK",
+   "vote_count": 5,
+   "k": 5,
+   "neighbour_families": [
+    "PSK",
+    "PSK",
+    "PSK",
+    "PSK",
+    "PSK"
+   ],
+   "neighbour_distances": [
+    0.0,
+    2.9415629572071027,
+    3.282091821941668,
+    3.661907927324068,
+    3.6878561642680827
+   ],
+   "mean_dist_to_neighbours": 2.7146837741481837
+  },
+  {
+   "name": "control_RALF",
+   "true_family": "RALF",
+   "seq_length": 116,
+   "predicted_family": "RALF",
+   "vote_count": 5,
+   "k": 5,
+   "neighbour_families": [
+    "RALF",
+    "RALF",
+    "RALF",
+    "RALF",
+    "RALF"
+   ],
+   "neighbour_distances": [
+    0.0,
+    2.957215960427026,
+    3.2900480984953737,
+    3.421400568972625,
+    4.0202075648500495
+   ],
+   "mean_dist_to_neighbours": 2.737774438549015
+  },
+  {
+   "name": "control_PEP",
+   "true_family": "PEP",
+   "seq_length": 50,
+   "predicted_family": "PEP",
+   "vote_count": 5,
+   "k": 5,
+   "neighbour_families": [
+    "PEP",
+    "PEP",
+    "PEP",
+    "PEP",
+    "PEP"
+   ],
+   "neighbour_distances": [
+    0.0,
+    3.7903005653712247,
+    4.340568561657946,
+    4.606772311970133,
+    4.6793239267281015
+   ],
+   "mean_dist_to_neighbours": 3.483393073145481
+  },
+  {
+   "name": "control_DECOY",
+   "true_family": "DECOY",
+   "seq_length": 101,
+   "predicted_family": "DECOY",
+   "vote_count": 5,
+   "k": 5,
+   "neighbour_families": [
+    "DECOY",
+    "DECOY",
+    "DECOY",
+    "DECOY",
+    "DECOY"
+   ],
+   "neighbour_distances": [
+    0.0,
+    3.8228745665742765,
+    4.767823820021301,
+    4.7679100823828255,
+    4.8946089476507435
+   ],
+   "mean_dist_to_neighbours": 3.6506434833258297
+  }
+ ]
+}
