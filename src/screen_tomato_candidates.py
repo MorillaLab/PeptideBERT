@@ -49,7 +49,7 @@ from peptide_data import encode, AMINO_ACIDS, PAD_ID, CLS_ID, SEP_ID
 from pretrain import load_model, _release_memory
 from embeddings_analysis import model_embeddings, load_records
 
-RESULTS = "/home/claude/s2pepanalyst/results"
+RESULTS = "/home/morillalab/s2pepanalyst/results"
 FAMILY_NAMES = ["RALF", "CLE", "PSK", "PEP", "DECOY"]
 
 TOMATO_SYSTEMIN = "AVQSKPPSKRDPPKMQTD"  # UniProt P27058, residues 179-196 of prosystemin
