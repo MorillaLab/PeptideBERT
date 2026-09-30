@@ -7,8 +7,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-RESULTS = "/home/claude/s2pepanalyst/results"
-FIGDIR = "/home/claude/s2pepanalyst/figures"
+RESULTS = "/home/morillalab/s2pepanalyst/results"
+FIGDIR = "/home/morillalab/s2pepanalyst/figures"
 plt.rcParams.update({"figure.dpi": 140, "font.size": 10, "axes.spines.top": False,
                       "axes.spines.right": False})
 
