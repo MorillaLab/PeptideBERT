@@ -43,7 +43,7 @@ Tools like S²-PepAnalyst (*Plant Biotechnol. J.*, 2026) classify plant SSPs usi
 | Linear-probe family acc. (12 epochs) | **93.3%** | — | 90.0% | — | — | — | — |
 | Masked positions with saliency > mean | **14 / 14** | — | — | — | — | — | — |
 
-BLOSUM62 = mean-pooled per-residue BLOSUM62 rows (Henikoff & Henikoff 1992), loaded from Biopython — the closest available proxy for ESM-2's role as a generic, non-domain-pretrained representation. Real ESM-2 weights were unreachable from the build environment (HTTP 403 from both hosting endpoints); a one-function drop-in for the literal comparison is in `src/head_to_head_blosum.py`.
+BLOSUM62 = mean-pooled per-residue BLOSUM62 rows (Henikoff & Henikoff 1992), loaded from Biopython — the closest available proxy for ESM-2's role as a generic, non-domain-pretrained representation. Real ESM-2 weights were unreachable from the build environment; a one-function drop-in for the literal comparison is in `src/head_to_head_blosum.py`.
 
 ### Mature-peptide model (MAX\_LEN = 32, trained on 10–25 aa mature peptides)
 
