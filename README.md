@@ -80,10 +80,10 @@ Input sequence  ──► [CLS] + tokenised residues + [SEP] + [PAD]…
                    Embedding layer
                    (token emb. 26×64  +  positional emb. MAX_LEN×64)
                           │
-              ┌── 3 × Pre-LN Transformer encoder layer ──┐
-              │   Multi-head self-attention (4 heads, d=16 each)
-              │   Feed-forward (64→256→64, GELU)
-              └────────────────────────────────────────────┘
+              ┌── 3 × Pre-LN Transformer encoder layer  ────────┐
+              │   Multi-head self-attention (4 heads, d=16 each)│
+              │   Feed-forward (64→256→64, GELU)                │
+              └─────────────────────────────────────────────────┘
                           │
               ┌── MLM head (pretraining) ──► 26-way logits per position
               │
