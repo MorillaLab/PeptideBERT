@@ -49,7 +49,7 @@ BLOSUM62 = mean-pooled per-residue BLOSUM62 rows (Henikoff & Henikoff 1992), loa
 
 | Metric | Mature-scale model | BLOSUM62 | ESM-2 | 
 |---|---|---|---|
-| Distance ratio (candidates ÷ reference) | **0.86×** (in-distribution) | 1.00× (by construction) | (in-distribution) |
+| Distance ratio (candidates ÷ reference) | **0.86×** (in-distribution) | 1.00× (by construction) | 1.00× (in-distribution) |
 | Active vs. inactive pairwise ordering, 7 lit. peptides (held-out) | **12 / 12** | 12 / 12 | 12 / 12 | 
 | Spearman ρ vs. 3-level activity ordinal | 0.84 (p=0.019) | 0.90 (p=0.006) | 0.93 (p=) |
 | Active-group mean distance | 2.16 | 1.35 | 8.16 |
