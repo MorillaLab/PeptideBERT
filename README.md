@@ -21,7 +21,7 @@
 
 ---
 
-**169,567 parameters. Zero deep-learning dependencies. Four peptide families + one synthetic decoy. Fully reproducible from a single command.** PeptideBERT asks whether a small transformer pretrained *directly on plant signalling-peptide sequences*, with no multiple-sequence alignment and no structural supervision, learns anything a matched untrained backbone does not. It does — and this repository shows exactly where it helps, where it ties a 33-year-old substitution matrix, and where it fails, reported as found.
+**169,567 parameters. Zero deep-learning dependencies. Four peptide families + one synthetic decoy. Fully reproducible from a single command.** PeptideBERT asks whether a small transformer pretrained *directly on plant signalling-peptide sequences*, with no multiple-sequence alignment and no structural supervision, learns anything a matched untrained backbone does not. It does — and this repository shows exactly where it helps, where it ties a 33-year-old substitution matrix, and where it fails, reported as found. Similarly for the bidirectional PLM ESM2.
 
 ---
 
