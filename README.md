@@ -225,7 +225,7 @@ TEMPLATE scaffolds embed real, literature-reported conserved motifs in illustrat
 
 ## Roadmap
 
-- [ ] Port `tensor.py` autograd to PyTorch/JAX — the model code is written to make this a one-import change, no structural refactor needed
+- [x] Port `tensor.py` autograd to PyTorch/JAX — the model code is written to make this a one-import change, no structural refactor needed
 - [ ] Replace PSK and PEP template scaffolds with real curated sequences from PlantPepDB or an S²-PepAnalyst training-set export
 - [x] Run the literal ESM-2 comparison — swap `get_esm2_embedding()` in `src/head_to_head_blosum.py` on a machine with model-hub access; no other change required
 - [ ] Structural downstream task — contact/interface-prediction using AlphaFold-modelled RALF–LRX complexes (SlLRX5–SlRALF5/10, see Montano et al. 2026); data sourced, framing under discussion
