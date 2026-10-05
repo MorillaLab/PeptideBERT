@@ -39,9 +39,9 @@ Tools like S²-PepAnalyst (*Plant Biotechnol. J.*, 2026) classify plant SSPs usi
 |---|---|---|---|---|---|---|---|---|
 | kNN family acc., full corpus (n=300) | **98.0%** | 93.0% | 95.0% | 82.0% | 90.7% | 80.0% | 36.0% | 20% |
 | kNN family acc., length-matched (n=148) | **97.2%** | 93.2% | 95.9% | 83.1% | 91.8% | 81.1% | 24.4% | 20% |
-| Masked-residue acc. (pseudo-PPL eval) | **18.0%** | — | - | 5.1% | — | — | — | ~5% |
-| Linear-probe family acc. (12 epochs) | **93.3%** | — | - | 90.0% | — | — | — | — |
-| Masked positions with saliency > mean | **14 / 14** | — | - | — | — | — | — | — |
+| Masked-residue acc. (pseudo-PPL eval) | **18.0%** | — | — | 5.1% | — | — | — | ~5% |
+| Linear-probe family acc. (12 epochs) | **93.3%** | — | — | 90.0% | — | — | — | — |
+| Masked positions with saliency > mean | **14 / 14** | — | — | — | — | — | — | — |
 
 BLOSUM62 = mean-pooled per-residue BLOSUM62 rows (Henikoff & Henikoff 1992), loaded from Biopython — the closest available proxy for ESM-2's role as a generic, non-domain-pretrained representation. Real ESM-2 weights were unreachable from the build environment; a one-function drop-in for the literal comparison is in `src/head_to_head_blosum.py`.
 
