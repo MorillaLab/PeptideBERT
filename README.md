@@ -47,14 +47,14 @@ BLOSUM62 = mean-pooled per-residue BLOSUM62 rows (Henikoff & Henikoff 1992), loa
 
 ### Mature-peptide model (MAX\_LEN = 32, trained on 10–25 aa mature peptides)
 
-| Metric | Mature-scale model | BLOSUM62 |
-|---|---|---|
-| Distance ratio (candidates ÷ reference) | **0.86×** (in-distribution) | 1.00× (by construction) |
-| Active vs. inactive pairwise ordering, 7 lit. peptides (held-out) | **12 / 12** | 12 / 12 |
-| Spearman ρ vs. 3-level activity ordinal | 0.84 (p=0.019) | 0.90 (p=0.006) |
-| Active-group mean distance | 2.16 | 1.35 |
-| Reduced/inactive-group mean distance | 6.31 | 2.08 |
-| Active-vs-rest gap / active-group s.d. | **5.13** | 2.15 |
+| Metric | Mature-scale model | BLOSUM62 | ESM-2 | 
+|---|---|---|---|
+| Distance ratio (candidates ÷ reference) | **0.86×** (in-distribution) | 1.00× (by construction) | (in-distribution) |
+| Active vs. inactive pairwise ordering, 7 lit. peptides (held-out) | **12 / 12** | 12 / 12 | 12 / 12 | 
+| Spearman ρ vs. 3-level activity ordinal | 0.84 (p=0.019) | 0.90 (p=0.006) | 0.93 (p=) |
+| Active-group mean distance | 2.16 | 1.35 | 8.16 |
+| Reduced/inactive-group mean distance | 6.31 | 2.08 | 12.11 |
+| Active-vs-rest gap / active-group s.d. | **5.13** | 2.15 | - |
 
 All four canonical active peptides (AtPep1, CLV3, TDIF, GrCLE1-1) were withheld from training before the screening test. Sequences in training are flagged programmatically; the leaky first-pass run is kept in `src/screen_mature_candidates.py` so the difference is auditable.
 
