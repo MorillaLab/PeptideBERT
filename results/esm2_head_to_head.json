@@ -1,0 +1,77 @@
+{
+ "main_full": {
+  "mean": 0.95,
+  "std": 0.02357022603955158,
+  "n": 300
+ },
+ "main_length_matched": {
+  "mean": 0.9593103448275861,
+  "std": 0.025387471617983496,
+  "n": 148
+ },
+ "mature_screening": {
+  "reference_mean_dist": 11.690746299922466,
+  "active_mean": 8.16363525390625,
+  "inactive_mean": 12.118028004964193,
+  "pairwise_correct": 12,
+  "pairwise_total": 12,
+  "candidates": [
+   {
+    "name": "Ag_16p_negctrl",
+    "expected": "INACTIVE",
+    "seq": "APNNHHYSSAGRQDQT",
+    "in_training": false,
+    "predicted_family": "PEP",
+    "mean_dist": 15.305697441101074
+   },
+   {
+    "name": "AtPep1_13_23",
+    "expected": "PARTIAL",
+    "seq": "KVSSGRPGQHN",
+    "in_training": false,
+    "predicted_family": "PEP",
+    "mean_dist": 10.360837936401367
+   },
+   {
+    "name": "AtPep1_full",
+    "expected": "ACTIVE",
+    "seq": "ATKVKAKQRGKEKVSSGRPGQHN",
+    "in_training": false,
+    "predicted_family": "PEP",
+    "mean_dist": 7.433423042297363
+   },
+   {
+    "name": "CLV3_12mer",
+    "expected": "ACTIVE",
+    "seq": "RTVPSGPDPLHH",
+    "in_training": false,
+    "predicted_family": "CLE",
+    "mean_dist": 8.624798774719238
+   },
+   {
+    "name": "GrCLE1_1",
+    "expected": "ACTIVE",
+    "seq": "RVIPGGPDPLHN",
+    "in_training": false,
+    "predicted_family": "CLE",
+    "mean_dist": 9.134031295776367
+   },
+   {
+    "name": "GrCLE1_1m_G6A",
+    "expected": "REDUCED",
+    "seq": "RVIPGAPDPLHN",
+    "in_training": false,
+    "predicted_family": "CLE",
+    "mean_dist": 10.687548637390137
+   },
+   {
+    "name": "TDIF",
+    "expected": "ACTIVE",
+    "seq": "HEVPSGPNPISN",
+    "in_training": false,
+    "predicted_family": "CLE",
+    "mean_dist": 7.462287902832031
+   }
+  ]
+ }
+}
