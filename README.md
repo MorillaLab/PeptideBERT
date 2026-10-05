@@ -215,7 +215,7 @@ TEMPLATE scaffolds embed real, literature-reported conserved motifs in illustrat
 
 ## Honest accounting — what this study does and does not show
 
-**Shows convincingly (corpus scale, n=300/148):** domain-specific pretraining produces embeddings that separate SSP families more cleanly than an untrained backbone, a BLOSUM62 evolutionary proxy, and hand-engineered composition statistics, even with sequence length controlled, and that PeptideBERT beats ESM-2. 
+**Shows convincingly (corpus scale, n=300/148):** domain-specific pretraining produces embeddings that separate SSP families more cleanly than an untrained backbone, a BLOSUM62 evolutionary proxy, hand-engineered composition statistics, even with sequence length controlled, and that PeptideBERT beats ESM-2. 
 
 **Shows suggestively (screening scale, n=7):** the mature-scale model ranks known-active literature peptides closer to its training distribution than known-inactive ones, including against held-out sequences not used in any stage of training. The same metric ties BLOSUM62.
 
