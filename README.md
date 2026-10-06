@@ -43,7 +43,7 @@ Tools like S²-PepAnalyst (*Plant Biotechnol. J.*, 2026) classify plant SSPs usi
 | Linear-probe family acc. (12 epochs) | **93.3%** | — | — | 90.0% | — | — | — | — |
 | Masked positions with saliency > mean | **14 / 14** | — | — | — | — | — | — | — |
 
-BLOSUM62 = mean-pooled per-residue BLOSUM62 rows (Henikoff & Henikoff 1992), loaded from Biopython — the closest available proxy for ESM-2's role as a generic, non-domain-pretrained representation. Real ESM-2 weights were reachable from the build environment; a one-function drop-in for the literal comparison is in `src/head_to_head_blosum.py`. Subsequently, fine‑tuning buys us ~3 points on the in‑distribution task and nothing measurable on the out‑of‑distribution screen.
+BLOSUM62 = mean-pooled per-residue BLOSUM62 rows (Henikoff & Henikoff 1992), loaded from Biopython — the closest available proxy for ESM-2's role as a generic, non-domain-pretrained representation. Real ESM-2 weights were reachable from the build environment; a one-function drop-in for the literal comparison is in `src/head_to_head_blosum.py`. 
 
 ### Mature-peptide model (MAX\_LEN = 32, trained on 10–25 aa mature peptides)
 
@@ -56,7 +56,7 @@ BLOSUM62 = mean-pooled per-residue BLOSUM62 rows (Henikoff & Henikoff 1992), loa
 | Reduced/inactive-group mean distance | 6.31 | 2.08 | 12.11 |
 | Active-vs-rest gap / active-group s.d. | **5.13** | 2.15 | - |
 
-All four canonical active peptides (AtPep1, CLV3, TDIF, GrCLE1-1) were withheld from training before the screening test. Sequences in training are flagged programmatically; the leaky first-pass run is kept in `src/screen_mature_candidates.py` so the difference is auditable.
+All four canonical active peptides (AtPep1, CLV3, TDIF, GrCLE1-1) were withheld from training before the screening test. Sequences in training are flagged programmatically; the leaky first-pass run is kept in `src/screen_mature_candidates.py` so the difference is auditable. Subsequently, fine‑tuning buys us ~3 points on the in‑distribution task and nothing measurable on the out‑of‑distribution screen.
 
 ---
 
