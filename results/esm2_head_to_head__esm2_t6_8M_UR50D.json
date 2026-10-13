@@ -1,0 +1,122 @@
+{
+ "provenance": {
+  "checkpoint": "esm2_t6_8M_UR50D",
+  "embed_dim": 320,
+  "num_layers": 6,
+  "n_parameters": 7512474,
+  "fair_esm_version": "2.0.0",
+  "torch_version": "2.11.0+cpu",
+  "device": "cpu"
+ },
+ "main_full": {
+  "mean": 0.95,
+  "std": 0.02357022603955158,
+  "n": 300,
+  "folds": [
+   0.9666666666666667,
+   0.9833333333333333,
+   0.9333333333333333,
+   0.9166666666666666,
+   0.95
+  ]
+ },
+ "main_length_matched": {
+  "mean": 0.9593103448275861,
+  "std": 0.025387471617983496,
+  "n": 148,
+  "folds": [
+   0.9333333333333333,
+   1.0,
+   0.9666666666666667,
+   0.9655172413793104,
+   0.9310344827586207
+  ]
+ },
+ "mature_screening": {
+  "reference_mean_dist": 11.690747668259611,
+  "candidates": [
+   {
+    "name": "Ag_16p_negctrl",
+    "expected": "INACTIVE",
+    "seq": "APNNHHYSSAGRQDQT",
+    "in_training": false,
+    "predicted_family": "PEP",
+    "mean_dist": 15.305697441101074
+   },
+   {
+    "name": "AtPep1_13_23",
+    "expected": "PARTIAL",
+    "seq": "KVSSGRPGQHN",
+    "in_training": false,
+    "predicted_family": "PEP",
+    "mean_dist": 10.360836029052734
+   },
+   {
+    "name": "AtPep1_full",
+    "expected": "ACTIVE",
+    "seq": "ATKVKAKQRGKEKVSSGRPGQHN",
+    "in_training": false,
+    "predicted_family": "PEP",
+    "mean_dist": 7.4334259033203125
+   },
+   {
+    "name": "CLV3_12mer",
+    "expected": "ACTIVE",
+    "seq": "RTVPSGPDPLHH",
+    "in_training": false,
+    "predicted_family": "CLE",
+    "mean_dist": 8.624799728393555
+   },
+   {
+    "name": "GrCLE1_1",
+    "expected": "ACTIVE",
+    "seq": "RVIPGGPDPLHN",
+    "in_training": false,
+    "predicted_family": "CLE",
+    "mean_dist": 9.134027481079102
+   },
+   {
+    "name": "GrCLE1_1m_G6A",
+    "expected": "REDUCED",
+    "seq": "RVIPGAPDPLHN",
+    "in_training": false,
+    "predicted_family": "CLE",
+    "mean_dist": 10.687551498413086
+   },
+   {
+    "name": "TDIF",
+    "expected": "ACTIVE",
+    "seq": "HEVPSGPNPISN",
+    "in_training": false,
+    "predicted_family": "CLE",
+    "mean_dist": 7.462291717529297
+   }
+  ],
+  "n_active": 4,
+  "n_non_active": 3,
+  "active_mean": 8.163636207580566,
+  "non_active_mean": 12.118028322855631,
+  "gap": 3.9543921152750645,
+  "active_sd_ddof0": 0.738143312437339,
+  "gap_in_active_sd": 5.3572145796697885,
+  "spearman_rho": 0.8964214570007952,
+  "spearman_p": 0.006267499099451484,
+  "pairwise_correct": 12,
+  "pairwise_total": 12
+ },
+ "comparators": {
+  "PeptideBERT": {
+   "n_active": 4,
+   "n_non_active": 3,
+   "active_mean": 2.1568374696342745,
+   "non_active_mean": 6.311955818873048,
+   "gap": 4.155118349238773,
+   "active_sd_ddof0": 0.8099300681377583,
+   "gap_in_active_sd": 5.130218660473342,
+   "spearman_rho": 0.8366600265340756,
+   "spearman_p": 0.018927124071945644,
+   "pairwise_correct": 12,
+   "pairwise_total": 12
+  }
+ }
+}
