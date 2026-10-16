@@ -1,0 +1,30 @@
+{
+ "n": 1907,
+ "classes": [
+  "CLE",
+  "NONSSP",
+  "PEP",
+  "PSK",
+  "RALF",
+  "RGF"
+ ],
+ "chance": 0.16666666666666666,
+ "coverage_threshold": 0.9,
+ "motifs": {
+  "CLE": null,
+  "NONSSP": null,
+  "PEP": null,
+  "PSK": {
+   "motif": "DYIYTQ",
+   "length": 6,
+   "coverage": 0.905
+  },
+  "RALF": null,
+  "RGF": null
+ },
+ "substring_classifier_accuracy": 0.356581017304667,
+ "leaky_families": [
+  "PSK"
+ ],
+ "verdict": "PASS"
+}

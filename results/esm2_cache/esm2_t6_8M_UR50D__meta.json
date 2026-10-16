@@ -1,0 +1,9 @@
+{
+ "checkpoint": "esm2_t6_8M_UR50D",
+ "embed_dim": 320,
+ "num_layers": 6,
+ "n_parameters": 7512474,
+ "fair_esm_version": "2.0.0",
+ "torch_version": "2.2.2",
+ "device": "cpu"
+}
