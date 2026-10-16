@@ -1,11 +1,39 @@
-# PeptideBERT
+<h1 align="center">PeptideBERT</h1>
 
-**A 170,000-parameter protein language model for plant small signalling peptides,
-trained from scratch in NumPy, that matches ESM-2 on family representation.**
+<p align="center">
+  <strong>A 170,000-parameter protein language model for plant small signalling
+  peptides, trained from scratch in NumPy, that matches ESM-2 on family
+  representation.</strong>
+</p>
 
-Companion pretraining module for
-[S²-PepAnalyst](https://www.biorxiv.org/content/10.1101/2024.08.02.606319)
-(IHSM La Mayora).
+<p align="center">
+  <img src="https://img.shields.io/badge/parameters-169%2C567-c0392b" alt="parameters">
+  <img src="https://img.shields.io/badge/DL%20framework-none-success" alt="no deep-learning framework">
+  <img src="https://img.shields.io/badge/trains%20on-laptop%20CPU-success" alt="CPU only">
+  <img src="https://img.shields.io/badge/python-3.9%2B-blue" alt="python">
+  <img src="https://img.shields.io/badge/license-MIT-lightgrey" alt="license">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/corpus-1%2C907%20real%20UniProtKB-2980b9" alt="corpus">
+  <img src="https://img.shields.io/badge/evaluation-cluster--aware%20(70%25%20id)-2980b9" alt="homology-aware">
+  <img src="https://img.shields.io/badge/6--class%20k--NN-0.852-c0392b" alt="accuracy">
+  <img src="https://img.shields.io/badge/vs%20ESM--2%20t6__8M-tie%20(0.861)-8e44ad" alt="vs ESM-2">
+  <img src="https://img.shields.io/badge/leakage%20control-PASS-success" alt="substring baseline">
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="figures/hero_dark.png">
+    <img src="figures/hero.png" alt="PeptideBERT matches ESM-2 at 1/44 the parameters" width="100%">
+  </picture>
+</p>
+
+<p align="center">
+  <em>Companion pretraining module for
+  <a href="https://www.biorxiv.org/content/10.1101/2024.08.02.606319">S²-PepAnalyst</a>
+  (IHSM La Mayora).</em>
+</p>
 
 ---
 
@@ -167,6 +195,7 @@ src/
   head_to_head_esm2.py       ESM-2 comparison, two-phase
   substring_baseline.py      leakage control
   make_figures_real.py       all four figures, from results/*.json
+  make_readme_hero.py        README banner (light + dark variants)
 results/                     corpus, weights, every JSON behind every figure
 figures/                     generated
 MANUSCRIPT.tex / .pdf        the paper
