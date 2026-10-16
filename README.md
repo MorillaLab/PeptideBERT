@@ -1,4 +1,4 @@
-<h1 align="center">PeptideBERT</h1>
+<h1 align="center">PhytoPepBERT</h1>
 
 <p align="center">
   <strong>A 170,000-parameter protein language model for plant small signalling
@@ -25,7 +25,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="figures/hero_dark.png">
-    <img src="figures/hero.png" alt="PeptideBERT matches ESM-2 at 1/44 the parameters" width="100%">
+    <img src="figures/hero.png" alt="PhytoPepBERT matches ESM-2 at 1/44 the parameters" width="100%">
   </picture>
 </p>
 
@@ -52,7 +52,7 @@ sequences, 5-fold k-NN grouped by 70%-identity cluster, chance = 16.7%:
 | representation | parameters | full corpus | length-matched (n=228) |
 |---|---|---|---|
 | **ESM-2** `t6_8M`, zero-shot | 7,512,474 | **0.861 ± 0.028** | **0.825 ± 0.072** |
-| **PeptideBERT** (this repo) | **169,567** | 0.852 ± 0.024 | 0.805 ± 0.054 |
+| **PhytoPepBERT** (this repo) | **169,567** | 0.852 ± 0.024 | 0.805 ± 0.054 |
 | dipeptide composition | 0 | 0.751 ± 0.041 | 0.712 ± 0.095 |
 | length + composition | 0 | 0.750 ± 0.049 | 0.708 ± 0.078 |
 | BLOSUM62 | 0 | 0.676 ± 0.041 | 0.698 ± 0.065 |
@@ -67,10 +67,10 @@ Three things to read out of that table:
   evaluation — the difference is attributable to pretraining and nothing else.
 - **It is not reachable by cheaper means.** Composition statistics and substitution
   matrices land 10–18 points below.
-- **It does not beat ESM-2.** Scored on identical folds, PeptideBERT leads in 2 of 5
+- **It does not beat ESM-2.** Scored on identical folds, PhytoPepBERT leads in 2 of 5
   and trails in 3, mean difference −0.9 points. We report this as a tie.
 
-Two asymmetries work in PeptideBERT's favour and are measured rather than assumed:
+Two asymmetries work in PhytoPepBERT's favour and are measured rather than assumed:
 it was pretrained on 77% of the sequences the evaluation scores, worth ~5 accuracy
 points (BLOSUM62 control: −1.5 points on the same subsets), and the ESM-2 comparator
 is the *smallest* checkpoint in its family.
@@ -138,7 +138,7 @@ easy. The control exits non-zero on failure, so it can gate CI.
 ## Quickstart
 
 ```bash
-git clone https://github.com/MorillaLab/PeptideBERT && cd PeptideBERT
+git clone https://github.com/MorillaLab/PhytoPepBERT && cd PhytoPepBERT
 pip install -r requirements.txt
 python3 run_all.py                       # ~1 h on a laptop CPU
 ```
@@ -242,14 +242,19 @@ The ESM-2 arm adds `torch` and `fair-esm` plus model-hub access.
 ## Citation
 
 ```bibtex
-@article{morilla2026peptidebert,
-  title   = {A 170,000-parameter domain language model matches ESM-2
-             on plant small signalling peptide representation},
+@article{morilla2026phytopepbert,
+  title   = {PhytoPepBERT: a 170,000-parameter domain language model matches
+             ESM-2 on plant small signalling peptide representation},
   author  = {Morilla, Ian},
   year    = {2026},
   note    = {Preprint}
 }
 ```
+
+> **On the name.** Not to be confused with
+> [PeptideBERT](https://github.com/ChakradharG/PeptideBERT) (Guntuboina et al.,
+> *J. Phys. Chem. Lett.* 2023), which fine-tunes ProtBERT for hemolysis, solubility
+> and non-fouling prediction. Different model, different task, no relation.
 
 Built in the spirit of [NucleicBERT](https://doi.org/10.1038/s42256-026-01295-9)
 (Upadhyay, Herold, Götz & Schug, *Nat. Mach. Intell.*, 2026) — a small domain language
