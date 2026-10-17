@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/DL%20framework-none-success" alt="no deep-learning framework">
   <img src="https://img.shields.io/badge/trains%20on-laptop%20CPU-success" alt="CPU only">
   <img src="https://img.shields.io/badge/python-3.9%2B-blue" alt="python">
- [<img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License">](https://choosealicense.com/licenses/gpl-3.0/)
+  <img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License">
 </p>
 
 <p align="center">
