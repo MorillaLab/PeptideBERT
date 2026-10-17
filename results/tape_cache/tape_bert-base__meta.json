@@ -1,0 +1,8 @@
+{
+ "model": "tape/bert-base",
+ "embed_dim": 768,
+ "num_layers": 12,
+ "n_parameters": 91961856,
+ "torch_version": "2.2.2",
+ "device": "cpu"
+}
