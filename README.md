@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/DL%20framework-none-success" alt="no deep-learning framework">
   <img src="https://img.shields.io/badge/trains%20on-laptop%20CPU-success" alt="CPU only">
   <img src="https://img.shields.io/badge/python-3.9%2B-blue" alt="python">
-  <img src="https://img.shields.io/badge/license-MIT-lightgrey" alt="license">
+  <img src="https://img.shields.io/badge/license-GPL3.0-lightgrey" alt="license">
 </p>
 
 <p align="center">
