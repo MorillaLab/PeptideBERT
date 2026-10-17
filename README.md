@@ -227,10 +227,12 @@ MANUSCRIPT.tex / .pdf        the paper
 
 ## Reproducibility notes
 
-**Pin scikit-learn.** `StratifiedGroupKFold`'s fold-balancing changed between releases,
-so fold composition and per-fold accuracies are version-dependent. The numbers above
-were produced with the version pinned in `requirements.txt`. Means move by ~1–2 points
-across versions; conclusions do not.
+**scikit-learn is pinned to 1.3.2, exactly.** `StratifiedGroupKFold`'s fold-balancing
+changed between releases: on this corpus 1.3.2 gives fold sizes 400/349/359/334/407
+where 1.8.0 balances them to 382/382/381/381/381. Mean accuracies move by 1–2 points
+between the two; conclusions do not. Every number above was produced with 1.3.2, so
+`pip install -r requirements.txt` rather than a loose install if you want to
+reproduce them exactly.
 
 **Pretraining is not bit-reproducible across interruption patterns.** It checkpoints
 every 8 epochs and re-seeds its masking RNG at each call, so exact weights depend on

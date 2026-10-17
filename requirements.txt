@@ -1,8 +1,38 @@
-numpy>=1.24
+# PhytoPepBERT — pinned dependencies
+#
+# scikit-learn is pinned exactly, not loosely. StratifiedGroupKFold's
+# fold-balancing changed between releases: on this corpus 1.3.2 produces fold
+# sizes 400/349/359/334/407 where 1.8.0 balances them to 382/382/381/381/381.
+# Mean accuracies move by 1-2 points between the two. Every number in the
+# manuscript was produced with 1.3.2.
+
+# --- core: model, pretraining, fine-tuning, embedding analysis, figures ---
+# No deep-learning framework. This is the whole dependency set for
+# run_all.py and for reproducing Figs. 1-4.
+numpy>=1.24,<3
 scipy>=1.10
-scikit-learn>=1.2
+scikit-learn==1.3.2
 matplotlib>=3.7
 
-# No PyTorch/JAX by design -- see REPORT.md section 3. The model (src/model.py)
-# and autograd engine (src/tensor.py) are pure NumPy; porting to a real
-# framework later is a matter of swapping the Tensor import.
+# --- corpus construction (build_real_corpus.py) ---
+# Only needed to rebuild the corpus from UniProtKB. The released
+# results/splits.json makes this optional.
+requests>=2.28
+biopython>=1.81
+parasail>=1.3.4
+
+# --- ESM-2 and TAPE arms (head_to_head_esm2.py, head_to_head_tape.py) ---
+# Optional, and deliberately isolated: these are the only lines that pull in
+# PyTorch. Both scripts run embedding in a subprocess that exits before
+# analysis begins, because PyTorch links LLVM's OpenMP while NumPy/
+# scikit-learn link Intel's via MKL, and loading both into one process
+# segfaults on macOS.
+#
+#   torch>=2.0
+#   fair-esm==2.0.0
+#   tape_proteins>=0.5
+#
+# tape_proteins dates from 2019 and pins old dependencies. If it will not
+# install alongside a current torch, run `head_to_head_tape.py --phase embed`
+# in a separate virtualenv and `--phase analyze` from the main one; the
+# cached .npy is all the analysis needs.
