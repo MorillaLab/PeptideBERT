@@ -105,62 +105,87 @@ def fig1():
 
 # ---------------------------------------------------------------- fig 2
 def fig2():
-    emb, esm, blo = load("embeddings_analysis.json"), None, load("blosum_head_to_head.json")
-    for f in sorted(os.listdir(RESULTS)):
-        if f.startswith("esm2_head_to_head__"):
-            esm = load(f)
+    """Panel (a) is horizontal: with a full ESM-2 sweep plus TAPE there are ten
+    representations, and vertical bars cannot carry ten readable labels at any
+    sensible figure width. Horizontal also lets the labels stay one line."""
+    emb, blo = load("embeddings_analysis.json"), load("blosum_head_to_head.json")
+    esms = sorted((load(f) for f in sorted(os.listdir(RESULTS))
+                   if f.startswith("esm2_head_to_head__")),
+                  key=lambda d: d["provenance"]["n_parameters"])
+    esm = esms[0] if esms else None          # smallest: the capacity-closest comparator
+    tape = next((load(f) for f in sorted(os.listdir(RESULTS))
+                 if f.startswith("tape_head_to_head__")), None)
     if not emb:
         return
     kt = emb["knn_table"]
-    rows = []
-    if esm:
-        rows.append(("ESM-2 (8M)\nzero-shot", esm["main_full"]["mean"], esm["main_full"]["std"], ESM))
-    rows.append(("PeptideBERT\n169,567 params", kt["pretrained"]["mean"], kt["pretrained"]["std"], PB))
-    rows.append(("dipeptide\ncomposition", kt["dipeptide_composition"]["mean"], kt["dipeptide_composition"]["std"], GREY))
-    rows.append(("length +\ncomposition", kt["length_plus_composition"]["mean"], kt["length_plus_composition"]["std"], GREY))
+
+    def sz(n):
+        return f"{n/1e6:.0f}M" if n >= 1e6 else f"{n/1e3:.0f}K"
+
+    # worst first: barh puts index 0 at the bottom
+    rows = [("length only", kt["length_only"], "#bdc3c7"),
+            ("untrained backbone (169K)", kt["random_init"], "#bdc3c7")]
     if blo:
-        rows.append(("BLOSUM62", blo["main_full"]["mean"], blo["main_full"]["std"], BL))
-    rows.append(("untrained\nbackbone", kt["random_init"]["mean"], kt["random_init"]["std"], "#bdc3c7"))
-    rows.append(("length\nonly", kt["length_only"]["mean"], kt["length_only"]["std"], "#bdc3c7"))
+        rows.append(("BLOSUM62", blo["main_full"], BL))
+    rows += [("length + composition", kt["length_plus_composition"], GREY),
+             ("dipeptide composition", kt["dipeptide_composition"], GREY)]
+    if tape:
+        rows.append((f"TAPE ({sz(tape['provenance']['n_parameters'])})",
+                     tape["main_full"], "#16a085"))
+    rows.append(("PhytoPepBERT (169K)", kt["pretrained"], PB))
+    for e in esms:
+        rows.append((f"ESM-2 ({sz(e['provenance']['n_parameters'])})",
+                     e["main_full"], ESM))
+    rows.sort(key=lambda r: r[1]["mean"])
 
     n_cls = len(emb["family_names"])
-    fig, ax = plt.subplots(1, 2, figsize=(12.5, 4.2),
-                           gridspec_kw={"width_ratios": [1.65, 1]})
-    x = np.arange(len(rows))
-    ax[0].bar(x, [r[1] for r in rows], 0.62, yerr=[r[2] for r in rows], capsize=3,
-              color=[r[3] for r in rows], error_kw=dict(lw=1, ecolor="#555"))
+    h = max(4.2, 0.42 * len(rows) + 1.6)
+    fig, ax = plt.subplots(1, 2, figsize=(13.0, h),
+                           gridspec_kw={"width_ratios": [1.5, 1]})
+    y = np.arange(len(rows))
+    ax[0].barh(y, [r[1]["mean"] for r in rows], 0.62,
+               xerr=[r[1]["std"] for r in rows], capsize=3,
+               color=[r[2] for r in rows], error_kw=dict(lw=1, ecolor="#555"))
     for i, r in enumerate(rows):
-        ax[0].text(i, r[1] + r[2] + 0.018, f"{r[1]:.3f}", ha="center", fontsize=7.5)
-    ax[0].axhline(1/n_cls, color="black", ls=":", lw=1)
-    ax[0].text(len(rows)-0.4, 1/n_cls + 0.012, f"chance (1/{n_cls})", fontsize=7.5, ha="right")
-    # mark the margin the paper's central claim rests on
-    pb_v = kt["pretrained"]["mean"]; ri_v = kt["random_init"]["mean"]
-    i_pb = [i for i, r in enumerate(rows) if r[3] == PB][0]
+        ax[0].text(r[1]["mean"] + r[1]["std"] + 0.012, i, f"{r[1]['mean']:.3f}",
+                   va="center", fontsize=8,
+                   fontweight="bold" if r[2] in (PB, ESM) else "normal")
+    ax[0].axvline(1 / n_cls, color="black", ls=":", lw=1)
+    ax[0].text(1 / n_cls - 0.012, len(rows) - 0.5, f"chance (1/{n_cls})",
+               fontsize=7.5, ha="right", va="center")
+
+    # the margin the paper's central claim rests on
+    i_pb = [i for i, r in enumerate(rows) if r[2] == PB][0]
     i_ri = [i for i, r in enumerate(rows) if "untrained" in r[0]][0]
-    ax[0].annotate("", xy=(i_ri, ri_v), xytext=(i_ri, pb_v),
-                   arrowprops=dict(arrowstyle="<->", color=PB, lw=1.3))
-    ax[0].text(i_ri + 0.42, (pb_v + ri_v)/2, f"{(pb_v-ri_v)*100:+.1f} pts\nfrom pretraining",
-               ha="left", va="center", fontsize=7.5, color=PB)
-    ax[0].set_xlim(-0.7, len(rows) - 0.15)
-    ax[0].set_xticks(x); ax[0].set_xticklabels([r[0] for r in rows], fontsize=7.5)
-    ax[0].set_ylabel(f"{n_cls}-class kNN accuracy (cluster-aware 5-fold)")
-    ax[0].set_ylim(0, 1.02)
+    pb_v, ri_v = rows[i_pb][1]["mean"], rows[i_ri][1]["mean"]
+    xa = min(0.97, max(r[1]["mean"] + r[1]["std"] for r in rows) + 0.075)
+    ax[0].annotate("", xy=(xa, i_pb), xytext=(xa, i_ri),
+                   arrowprops=dict(arrowstyle="<->", color=PB, lw=1.6))
+    ax[0].text(xa + 0.012, (i_pb + i_ri) / 2,
+               f"{(pb_v-ri_v)*100:+.1f} pts\nfrom\npretraining",
+               ha="left", va="center", fontsize=8, color=PB, fontweight="bold")
+    ax[0].set_yticks(y)
+    ax[0].set_yticklabels([r[0] for r in rows], fontsize=9)
+    ax[0].set_xlim(0, xa + 0.14)
+    ax[0].set_xlabel(f"{n_cls}-class kNN accuracy (cluster-aware 5-fold)")
     ax[0].set_title("a. Pretraining beats every non-learned representation,\n"
-                    "and ties a generalist model 44x larger")
+                    "and ties ESM-2 at the nearest scale tested")
 
     if esm and kt["pretrained"].get("folds"):
         p = np.array(kt["pretrained"]["folds"]); z = np.array(esm["main_full"]["folds"])
-        f = np.arange(1, len(p)+1)
-        ax[1].plot(f, p, "o-", color=PB, lw=1.6, ms=7, label="PeptideBERT")
-        ax[1].plot(f, z, "s-", color=ESM, lw=1.6, ms=7, label="ESM-2 (8M)")
+        f = np.arange(1, len(p) + 1)
+        ax[1].plot(f, p, "o-", color=PB, lw=1.6, ms=7, label="PhytoPepBERT")
+        ax[1].plot(f, z, "s-", color=ESM, lw=1.6, ms=7,
+                   label=f"ESM-2 ({sz(esm['provenance']['n_parameters'])})")
         for i in range(len(p)):
             ax[1].plot([f[i], f[i]], [p[i], z[i]], color="#ccc", lw=1, zorder=0)
         w = int((p > z).sum()); l = int((p < z).sum())
         ax[1].set_xticks(f); ax[1].set_xlabel("cross-validation fold (identical splits)")
         ax[1].set_ylabel("accuracy")
         ax[1].legend(frameon=False, fontsize=8, loc="lower right")
-        ax[1].set_title(f"b. Paired fold by fold: PeptideBERT wins {w}, loses {l}\n"
+        ax[1].set_title(f"b. Paired fold by fold: PhytoPepBERT wins {w}, loses {l}\n"
                         f"mean difference {np.mean(p-z)*100:+.1f} points")
+    fig.tight_layout()
     save(fig, "fig2_representation_comparison.png")
 
 
@@ -237,7 +262,86 @@ def fig4():
     save(fig, "fig4_embedding_geometry.png")
 
 
+# ---------------------------------------------------------------- fig 5
+def fig5():
+    """Accuracy against parameter count across the ESM-2 family.
+
+    The question this answers is not "do we beat ESM-2" but "how much
+    generalist scale does it take to match a domain model of 169,567
+    parameters on this task". Skipped unless at least two ESM-2 checkpoints
+    have been run.
+    """
+    emb = load("embeddings_analysis.json")
+    esms = sorted((load(f) for f in sorted(os.listdir(RESULTS))
+                   if f.startswith("esm2_head_to_head__")),
+                  key=lambda d: d["provenance"]["n_parameters"])
+    if not emb or len(esms) < 2:
+        print("  fig5 skipped (needs >=2 ESM-2 checkpoints; run --sweep)")
+        return
+    tape = next((load(f) for f in sorted(os.listdir(RESULTS))
+                 if f.startswith("tape_head_to_head__")), None)
+    blo = load("blosum_head_to_head.json")
+    kt = emb["knn_table"]
+    PB_PARAMS = 169567
+    pb, pb_sd = kt["pretrained"]["mean"], kt["pretrained"]["std"]
+    ri = kt["random_init"]["mean"]
+
+    fig, ax = plt.subplots(figsize=(8.0, 5.0))
+    lo = min(blo["main_full"]["mean"] if blo else 1, kt["dipeptide_composition"]["mean"])
+    hi = max(blo["main_full"]["mean"] if blo else 0, kt["dipeptide_composition"]["mean"])
+    ax.axhspan(lo, hi, color=GREY, alpha=0.18, zorder=0)
+    ax.text(0.99, hi + 0.006, "non-learned baselines", fontsize=8, color="#555",
+            transform=ax.get_yaxis_transform(), ha="right")
+
+    x = [e["provenance"]["n_parameters"] for e in esms]
+    yv = [e["main_full"]["mean"] for e in esms]
+    ye = [e["main_full"]["std"] for e in esms]
+    ax.errorbar(x, yv, yerr=ye, fmt="s-", color=ESM, lw=1.8, ms=8, capsize=3,
+                label="ESM-2 (zero-shot)", zorder=3)
+    for e, xx, yy in zip(esms, x, yv):
+        ax.annotate(e["provenance"]["checkpoint"].replace("esm2_", "").replace("_UR50D", ""),
+                    (xx, yy), textcoords="offset points", xytext=(0, -16),
+                    fontsize=7.5, color=ESM, ha="center")
+
+    ax.axhline(pb, color=PB, ls="--", lw=1.4, zorder=2)
+    ax.fill_between([4e4, 1e10], pb - pb_sd, pb + pb_sd, color=PB, alpha=0.12, zorder=1)
+    ax.errorbar([PB_PARAMS], [pb], yerr=[pb_sd], fmt="o", color=PB, ms=12, capsize=3,
+                zorder=4, label=f"PhytoPepBERT ({PB_PARAMS:,} params)")
+    ax.scatter([PB_PARAMS], [ri], s=90, color=GREY, zorder=4,
+               label="untrained backbone (identical architecture)")
+    if tape:
+        tn, tv = tape["provenance"]["n_parameters"], tape["main_full"]["mean"]
+        ax.errorbar([tn], [tv], yerr=[tape["main_full"]["std"]], fmt="^",
+                    color="#16a085", ms=10, capsize=3, zorder=4,
+                    label="TAPE (zero-shot)")
+        ax.annotate("TAPE", (tn, tv), textcoords="offset points", xytext=(13, -4),
+                    fontsize=7.5, color="#16a085", ha="left")
+
+    # where, if anywhere, ESM-2 overtakes
+    over = [(xx, yy) for xx, yy in zip(x, yv) if yy > pb + pb_sd]
+    if over:
+        ax.annotate(f"ESM-2 clears PhytoPepBERT\nat {over[0][0]/1e6:.0f}M parameters",
+                    xy=over[0], xytext=(over[0][0] * 1.3, over[0][1] - 0.085),
+                    fontsize=8.5, color=ESM, ha="left",
+                    arrowprops=dict(arrowstyle="->", color=ESM, lw=1.2,
+                                    connectionstyle="arc3,rad=0.25"))
+    else:
+        ax.text(max(x) * 1.6, pb + 0.012,
+                "no tested checkpoint\nclears PhytoPepBERT", fontsize=8.5,
+                color=PB, ha="left", va="bottom")
+
+    ax.set_xscale("log")
+    ax.set_xlim(6e4, max(x) * 6)
+    ax.set_xlabel("parameters (log scale)")
+    ax.set_ylabel(f"{len(emb['family_names'])}-class kNN accuracy "
+                  f"(cluster-aware 5-fold)")
+    ax.legend(frameon=False, fontsize=8, loc="lower right")
+    ax.set_title("How much generalist scale does it take to match\n"
+                 "169,567 domain-pretrained parameters?", fontsize=10.5)
+    save(fig, "fig5_scaling.png")
+
+
 if __name__ == "__main__":
     print("regenerating figures from results/ ...")
-    fig1(); fig2(); fig3(); fig4()
+    fig1(); fig2(); fig3(); fig4(); fig5()
     print("done")

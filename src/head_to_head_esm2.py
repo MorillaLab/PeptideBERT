@@ -34,7 +34,17 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RESULTS = os.path.join(ROOT, "results")
 CACHE = os.path.join(RESULTS, "esm2_cache")
 CHECKPOINTS = ["esm2_t6_8M_UR50D"]
-# add to sweep: "esm2_t12_35M_UR50D", "esm2_t30_150M_UR50D", "esm2_t33_650M_UR50D"
+
+# --sweep runs these in order of size. Batch sizes drop as the model grows so
+# the 650M fits comfortably in RAM on a laptop; it is ~2.5 GB to download and
+# the slowest arm by a wide margin on CPU.
+SWEEP = [
+    ("esm2_t6_8M_UR50D",   16),
+    ("esm2_t12_35M_UR50D", 16),
+    ("esm2_t30_150M_UR50D", 8),
+    ("esm2_t33_650M_UR50D", 4),
+]
+BATCH = dict(SWEEP)
 
 HOLDOUT_SEQS = {"ATKVKAKQRGKEKVSSGRPGQHN", "RTVPSGPDPLHH",
                 "HEVPSGPNPISN", "RVIPGGPDPLHN"}
@@ -112,7 +122,7 @@ def embed_phase(ckpt):
     print(f"  embed_dim={meta['embed_dim']}  layers={layer}  "
           f"params={meta['n_parameters']:,}  device={device}")
 
-    def embed(seqs, batch_size=16):
+    def embed(seqs, batch_size=BATCH.get(ckpt, 16)):
         out = []
         for i in range(0, len(seqs), batch_size):
             chunk = seqs[i:i + batch_size]
@@ -151,6 +161,9 @@ def embed_phase(ckpt):
         print("    mature arm not run (absent or generated corpus)")
 
     json.dump(meta, open(os.path.join(CACHE, f"{ckpt}__meta.json"), "w"), indent=1)
+    del model
+    if device == "cuda":
+        torch.cuda.empty_cache()
     print("  embeddings cached; torch process exiting")
 
 
@@ -273,8 +286,18 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--phase", choices=["embed", "analyze", "both"], default="both")
     ap.add_argument("--checkpoint", default=None)
+    ap.add_argument("--sweep", action="store_true",
+                    help="run every checkpoint in SWEEP, smallest first. The 650M "
+                         "downloads ~2.5 GB and is slow on CPU; each checkpoint is "
+                         "cached and written separately, so it is safe to interrupt "
+                         "and resume.")
     a = ap.parse_args()
-    ckpts = [a.checkpoint] if a.checkpoint else CHECKPOINTS
+    if a.checkpoint:
+        ckpts = [a.checkpoint]
+    elif a.sweep:
+        ckpts = [c for c, _ in SWEEP]
+    else:
+        ckpts = CHECKPOINTS
 
     for ckpt in ckpts:
         print("=" * 70)
@@ -302,6 +325,29 @@ def main():
         if not caches_complete(ckpt):
             sys.exit(f"caches missing for {ckpt}; run --phase embed first")
         analyze_phase(ckpt)
+
+    if len(ckpts) > 1:
+        print("\n" + "=" * 70)
+        print("SWEEP SUMMARY")
+        print("=" * 70)
+        rows = []
+        for c in ckpts:
+            f = os.path.join(RESULTS, f"esm2_head_to_head__{c}.json")
+            if os.path.exists(f):
+                d = json.load(open(f))
+                rows.append((c, d["provenance"]["n_parameters"],
+                             d["provenance"]["embed_dim"], d["main_full"]["mean"],
+                             d["main_full"]["std"]))
+        ea = os.path.join(RESULTS, "embeddings_analysis.json")
+        pb = json.load(open(ea))["knn_table"]["pretrained"]["mean"] if os.path.exists(ea) else None
+        print(f"  {'checkpoint':24s} {'params':>12s} {'dim':>5s} {'accuracy':>16s}")
+        for c, n, d_, m, sd in rows:
+            flag = ""
+            if pb is not None:
+                flag = "  <- overtakes PhytoPepBERT" if m > pb else "  (at or below PhytoPepBERT)"
+            print(f"  {c:24s} {n:12,d} {d_:5d}   {m:.4f} +/- {sd:.4f}{flag}")
+        if pb is not None:
+            print(f"  {'PhytoPepBERT':24s} {169567:12,d} {64:5d}   {pb:.4f}")
 
 
 if __name__ == "__main__":
