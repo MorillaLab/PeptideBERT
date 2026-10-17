@@ -8,7 +8,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/parameters-169%2C567-c0392b" alt="parameters">
-  <img src="https://img.shields.io/badge/DL%20framework-none-success" alt="no deep-learning framework">
+  <img src="https://img.shields.io/badge/DL%20framework-optional-success" alt="no deep-learning framework">
   <img src="https://img.shields.io/badge/trains%20on-colab%20CPU-success" alt="CPU only">
   <img src="https://img.shields.io/badge/python-3.9%2B-blue" alt="python">
   <img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License">
